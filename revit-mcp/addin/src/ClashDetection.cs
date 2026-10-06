@@ -28,7 +28,7 @@ namespace RevitMCP
                         l.GetLinkDocument() != null &&
                         (request.LinkElementIds == null ||
                          request.LinkElementIds.Count == 0 ||
-                         request.LinkElementIds.Contains(l.Id.IntegerValue)))
+                         request.LinkElementIds.Contains(l.Id.Value)))
                     .ToList();
 
                 if (links.Count == 0)
@@ -77,14 +77,14 @@ namespace RevitMCP
                             {
                                 report.Clashes.Add(new ClashResult
                                 {
-                                    HostElementId = hostElem.Id.IntegerValue,
+                                    HostElementId = hostElem.Id.Value,
                                     HostCategory  = hostElem.Category?.Name ?? "",
                                     HostFamily    = GetFamilyName(hostElem),
                                     HostType      = GetTypeName(hostElem, doc),
                                     HostLocation  = GetLocationString(hostElem),
 
                                     LinkName      = link.Name,
-                                    LinkElementId = linkElem.Id.IntegerValue,
+                                    LinkElementId = linkElem.Id.Value,
                                     LinkCategory  = linkElem.Category?.Name ?? "",
                                     LinkFamily    = GetFamilyName(linkElem),
                                     LinkType      = GetTypeName(linkElem, linkDoc),
@@ -167,7 +167,7 @@ namespace RevitMCP
     internal sealed class ClashRequest
     {
         [JsonProperty("link_element_ids")]
-        public List<int>? LinkElementIds { get; set; }
+        public List<long>? LinkElementIds { get; set; }
     }
 
     internal sealed class ClashReport
@@ -179,14 +179,14 @@ namespace RevitMCP
 
     internal sealed class ClashResult
     {
-        public int    HostElementId { get; set; }
+        public long   HostElementId { get; set; }
         public string HostCategory  { get; set; } = string.Empty;
         public string HostFamily    { get; set; } = string.Empty;
         public string HostType      { get; set; } = string.Empty;
         public string HostLocation  { get; set; } = string.Empty;
 
         public string LinkName      { get; set; } = string.Empty;
-        public int    LinkElementId { get; set; }
+        public long   LinkElementId { get; set; }
         public string LinkCategory  { get; set; } = string.Empty;
         public string LinkFamily    { get; set; } = string.Empty;
         public string LinkType      { get; set; } = string.Empty;
