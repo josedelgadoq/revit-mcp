@@ -4,9 +4,6 @@ using Autodesk.Revit.DB;
 
 namespace RevitMCP
 {
-    /// <summary>
-    /// Returns information about all Revit link instances in the active document.
-    /// </summary>
     internal static class LinkedModels
     {
         internal static List<LinkedModelInfo> List()
@@ -26,7 +23,7 @@ namespace RevitMCP
                     var linkDoc = link.GetLinkDocument();
                     results.Add(new LinkedModelInfo
                     {
-                        ElementId = link.Id.IntegerValue,
+                        ElementId = link.Id.Value,
                         Name      = link.Name,
                         Path      = linkDoc?.PathName ?? string.Empty,
                         IsLoaded  = linkDoc != null
@@ -40,7 +37,7 @@ namespace RevitMCP
 
     internal sealed class LinkedModelInfo
     {
-        public int    ElementId { get; set; }
+        public long   ElementId { get; set; }
         public string Name      { get; set; } = string.Empty;
         public string Path      { get; set; } = string.Empty;
         public bool   IsLoaded  { get; set; }
